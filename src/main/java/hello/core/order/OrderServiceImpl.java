@@ -9,10 +9,16 @@ import hello.core.member.MemoryMemberRepository;
 public class OrderServiceImpl implements OrderService{
 
     //회원을 찾아야하니까
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository; //여기에 값이 할당됨 ,인터페이스에만 의존
 
     //discountPolicy
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     //잘된설계
     @Override /* 주문을 만들어서 반환해주기만 하면 orderService의 역할이 ㄱ끝남 */

@@ -9,7 +9,12 @@ public class MemberApp {
 
     //psvm
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
+
+        //AppConfig를 이용해서  App개발
+
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService(); //AppConfig에서 다 결정함
+//        MemberService memberService = new MemberServiceImpl();
         
         //ctrl + alt + v
         Member member = new Member(1L, "memberA", Grade.VIP);
