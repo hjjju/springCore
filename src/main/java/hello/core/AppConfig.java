@@ -9,25 +9,31 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class AppConfig {
+
+ //factory method를 이용해 등록하는 방법
 
     //구현객첵를 생성,연결
     //이전에는 객체를 생성하고 어떤 인터페이스가 들어가야하는지 할당하는것을 MemberService안에서 직접함
     //생성자주입
-    public MemberService memberService() { //MemberSerivice를 부르면
+    @Bean //@Bean을 적어두면 스프링컨테이너에 등록됨
+    public MemberService memberService() { //MemberSerivice를 부르면  ,key
 //        return new MemberServiceImpl(new MemoryMemberRepository()); //이때 memroyMemberRepository가 여기서 들어감  //ctrl + alt + m
-        return new MemberServiceImpl(memberRepository()); //이때 memroyMemberRepository가 여기서 들어감  //ctrl + alt + m
+        return new MemberServiceImpl(memberRepository()); //이때 memroyMemberRepository가 여기서 들어감  //ctrl + alt + m  //value
     }
-
-    private MemberRepository memberRepository() {
+    @Bean
+    public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
-
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());//생성자 주입
     }
-
+    @Bean
     public DiscountPolicy discountPolicy() {
 //        return new FixDiscountPolicy();
         return new RateDiscountPolicy(); //shift + f10 마지막실행된게 실행
