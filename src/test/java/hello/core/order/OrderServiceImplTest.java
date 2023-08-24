@@ -17,6 +17,7 @@ class OrderServiceImplTest {
         MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();
         memoryMemberRepository.save(new Member(1L,"name", Grade.VIP));
 
+        //생성자주입을 선택해야 빨리 detect할 수 있음
         OrderServiceImpl orderService = new OrderServiceImpl(new MemoryMemberRepository(),new FixDiscountPolicy());
         Order order = orderService.createOrder(1L, "IteamA", 10000);
         Assertions.assertThat(order.getDiscountPrice()).isEqualTo(1000);
